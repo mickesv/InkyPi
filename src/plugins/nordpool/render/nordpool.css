@@ -1,0 +1,40 @@
+.nordpool-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left; 
+  justify-content: left;
+  font-family: "Jost";
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+    text-align: left;
+}
+
+.prices {
+}
+
+th.date {
+    font-size: 6px;
+}
+
+th.hour, tr {
+    font-size: 8px;
+}
+
+td.minute {
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+td.price {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+td.pricenow {
+    padding-left: 2px;
+    padding-right: 2px;
+    font-weight: bold;
+}

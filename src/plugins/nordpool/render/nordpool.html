@@ -1,0 +1,50 @@
+{% extends "plugin.html" %}
+
+{% block content %}
+
+<div class="nordpool-container">
+  <div class="header">
+    <h1 class="title">{{title}}</h1>
+    <br>
+    <p class="time">{{time}}</p>
+  </div>
+  <br>
+
+  <div class="prices">
+    <table>
+      <tr>
+        <th></th>
+        {% for col in range(prices[0]|length) %} 
+        <th class="date">{{ prices[0][col] }}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        <th></th>
+        {% for col in range(prices[1]|length) %} 
+        <th class="hour">{{ prices[1][col] }}:00</th>
+        {% endfor %}
+      </tr>
+
+      {% for row in range(2,6) %}
+      <tr>
+        <td class="minute">
+          {% if 2==row %} :00
+          {% elif 3==row %} :15
+          {% elif 4==row %} :30
+          {% elif 5==row %} :45
+          {% endif %} 
+        </td>
+        {% for col in range(prices[0]|length) %}
+          {% if (currenthour == prices[1][col]) %} <td class="pricenow">
+          {% else %}  <td class="price">
+          {% endif -%}
+          {{ "%.2f"|format(prices[row][col]) }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      
+    </table>
+  </div>
+</div>
+
+{% endblock %}
