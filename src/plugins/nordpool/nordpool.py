@@ -47,6 +47,8 @@ class Nordpool(BasePlugin):
         template_params['updatetime'] = UPDATETIME # Hard coded to avoid worrying about keeping yesterday's data along with tomorrow's
         template_params['currency'] = 'SEK'
         template_params['testdata'] = 'True'
+        template_params['startdisplay'] = 6
+        template_params['enddisplay'] = 23
         return template_params
 
     def generate_image(self, settings, device_config):
@@ -54,6 +56,8 @@ class Nordpool(BasePlugin):
         title = 'Nordpool ' + area
         use_test_data = settings.get('testdata')
         prices = testdata.oneday
+        startdisplay = settings.get('startdisplay', 6)
+        enddisplay = settings.get('enddisplay', 23)
 
         if use_test_data:
             logger.info("Using test data...")
@@ -77,7 +81,9 @@ class Nordpool(BasePlugin):
             "currenthour": datetime.now().hour,
             "area" : area,
             "prices": prices,
-            "plugin_settings": settings
+            "plugin_settings": settings,
+            "startdisplay": startdisplay,
+            "enddisplay": enddisplay
         }
 
         image = self.render_image(dimensions, "nordpool.html", "nordpool.css", template_params)

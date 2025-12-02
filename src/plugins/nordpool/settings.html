@@ -4,11 +4,23 @@
         <input type="text" id="area" name="area" placeholder="e.g. SE4" required class="form-input">
     </div>
 
-
     <div class="form-group">
         <label for="currency" class="form-label">Currency</label>
         <input type="text" id="currency" name="currency" placeholder="e.g. SEK" required class="form-input">
     </div>
+
+    <div class="form-group">
+        <label for="startdisplay" class="form-label">Start Display Hour</label>
+        <input type="text" id="startdisplay" name="enddisplay" value="06" required class="form-input">
+    </div>
+
+    <div class="form-group">
+        <label for="enddisplay" class="form-label">End Display Hour</label>
+        <input type="text" id="enddisplay" name="enddisplay" value="23" required class="form-input">
+    </div>
+
+
+
 
     <div class="form-group">
         <label for="testdata" class="form-label">Use Test Data</label>
@@ -26,7 +38,19 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         if (loadPluginSettings) {
-            document.getElementById('currency').value = pluginSettings.area || 'SEK';
+            document.getElementById('currency').value = pluginSettings.currency || 'SEK';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (loadPluginSettings) {
+            document.getElementById('startdisplay').value = pluginSettings.startdisplay || '06';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (loadPluginSettings) {
+            document.getElementById('enddisplay').value = pluginSettings.enddisplay || '23';
         }
     });
 

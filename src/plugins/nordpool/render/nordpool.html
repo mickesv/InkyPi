@@ -14,13 +14,7 @@
     <table>
       <tr>
         <th></th>
-        {% for col in range(prices[0]|length) %} 
-        <th class="date">{{ prices[0][col] }}</th>
-        {% endfor %}
-      </tr>
-      <tr>
-        <th></th>
-        {% for col in range(prices[1]|length) %} 
+        {% for col in range(startdisplay, enddisplay) %} 
         <th class="hour">{{ prices[1][col] }}:00</th>
         {% endfor %}
       </tr>
@@ -34,7 +28,7 @@
           {% elif 5==row %} :45
           {% endif %} 
         </td>
-        {% for col in range(prices[0]|length) %}
+        {% for col in range(startdisplay, enddisplay) %}
           {% if (currenthour == prices[1][col]) %} <td class="pricenow">
           {% else %}  <td class="price">
           {% endif -%}
