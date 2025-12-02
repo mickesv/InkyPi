@@ -10,6 +10,8 @@ from . import testdata
 
 logger = logging.getLogger(__name__)
 
+UPDATETIME = '23'
+
 def _stringify_element(elem):
     return {'start': elem['start'].strftime("%Y-%m-%d %H:%M"),
             'end': elem['end'].strftime("%Y-%m-%d %H:%M"),
@@ -42,7 +44,7 @@ class Nordpool(BasePlugin):
     def generate_settings_template(self):
         template_params = super().generate_settings_template()
         template_params['area'] = 'SE4'
-        template_params['updatetime'] = '13'
+        template_params['updatetime'] = UPDATETIME # Hard coded to avoid worrying about keeping yesterday's data along with tomorrow's
         template_params['currency'] = 'SEK'
         template_params['testdata'] = 'True'
         return template_params
@@ -91,7 +93,7 @@ class Nordpool(BasePlugin):
         lastupdate = settings.get('lastupdate', yesterday.timestamp())
         if lastupdate: lastupdate = datetime.fromtimestamp(lastupdate)
 
-        updatetime = int(settings.get('updatetime', '13'))
+        updatetime = int(settings.get('updatetime', UPDATETIME))
         update_at = now.replace(hour=updatetime, minute=0, second=0)
 
         cached = settings.get('cached_prices')
@@ -100,6 +102,11 @@ class Nordpool(BasePlugin):
             logger.info("Definitely fetching from Nordpool")
             price_fetcher = elspot.Prices(currency)
             prices = price_fetcher.fetch(areas=[area])
+
+            if None==prices:
+                logger.info("Did not get any data for tomorrow. Trying to get today's prices instead.")
+                prices = price_fetcher.fetch(areas=[area], end_date=datetime.today())                
+
             settings['lastupdate'] = now.timestamp()
             settings['cached_prices'] = self._stringify(prices["areas"][area]["values"])
             return prices
